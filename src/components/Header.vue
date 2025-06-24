@@ -1,9 +1,9 @@
 <script setup lang="ts">
-    import IconCommunity from './icons/IconCommunity.vue'
+  import IconCommunity from './icons/IconCommunity.vue'
 </script>
 
 <template>
-  <header class="greetings">
+  <header class="container">
     <IconCommunity class="icon" />
     
     <nav>
@@ -16,9 +16,12 @@
 </template>
 
 <style scoped>
-.greetings {
+
+.container {
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
   padding: 1rem;
   background: #f8f9fa;
 }

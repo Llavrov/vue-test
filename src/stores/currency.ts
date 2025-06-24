@@ -1,24 +1,13 @@
+import { Currency, type CurrencyData } from '@/types/currency'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
-export interface CurrencyRate {
-  currency: string
-  rate: number
-}
-
-export interface CurrencyData {
-  base: string
-  rates: Record<string, number>
-  timestamp: number
-}
-
-export type Currency = 'USD' | 'EUR' | 'RUB'
 const BASE_RATE_VALUE = 1
 const RATE_ENDPOINT = 'https://status.neuralgeneration.com/api/currency'
-const supportedCurrencies: Currency[] = ['USD', 'EUR', 'RUB']
+const supportedCurrencies: Currency[] = [Currency.USD, Currency.EUR, Currency.RUB]
 
 export const useCurrencyStore = defineStore('currency', () => {
-  const baseCurrency = ref<Currency>('RUB')
+  const baseCurrency = ref<Currency>(Currency.RUB)
   const currencyData = ref<CurrencyData | null>(null)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
@@ -33,7 +22,7 @@ export const useCurrencyStore = defineStore('currency', () => {
   })
 
   const getRate = computed(() => {
-    return (fromCurrency: string, toCurrency: string): number => {
+    return (fromCurrency: Currency, toCurrency: Currency): number => {
       if (!currencyData.value) return BASE_RATE_VALUE
       
       const rates = currencyData.value.rates
@@ -80,7 +69,7 @@ export const useCurrencyStore = defineStore('currency', () => {
     baseCurrency.value = currency
   }
 
-  const convertCurrency = (amount: number, fromCurrency: string, toCurrency: string): number => {
+  const convertCurrency = (amount: number, fromCurrency: Currency, toCurrency: Currency): number => {
     if (fromCurrency === toCurrency) return amount
     
     const rate = getRate.value(fromCurrency, toCurrency)

@@ -1,15 +1,10 @@
+<script setup lang="ts">
+  import ConverterForm from '@/components/ConverterForm.vue'
+</script>
+
 <template>
-  <div class="converter">
-    <h1>This is an Convert page</h1>
-  </div>
+  <ConverterForm />
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .converter {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+<style scoped>
 </style>

@@ -6,7 +6,9 @@ import Header from './components/Header.vue'
 <template>
   <Header />
 
-  <RouterView />
+  <main id="app">
+    <RouterView />
+  </main>
 </template>
 
 <style>
@@ -26,6 +28,7 @@ body {
 #app {
   min-height: 100vh;
   display: flex;
+  gap: 100px;
   flex-direction: column;
 }
 

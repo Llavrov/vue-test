@@ -1,6 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import ConverterForm from '@/components/ConverterForm.vue'
+</script>
 
 <template>
-  <main>
-  </main>
+  <ConverterForm />
 </template>
