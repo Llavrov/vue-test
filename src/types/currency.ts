@@ -11,6 +11,6 @@ export interface CurrencyRate {
 
 export interface CurrencyData {
   base: Currency
-  rates: Record<Currency, number>
+  rates: Record<string, number>
   timestamp: number
 }

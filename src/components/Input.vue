@@ -52,10 +52,8 @@ const handleInput = (event: Event) => {
         min="0"
       />
       
-      <!-- Слот для дропдауна или символа валюты -->
       <div class="currency-section">
         <slot name="currency" :currency="currency">
-          <!-- Fallback - символ валюты по умолчанию -->
           <span class="currency">{{ currency }}</span>
         </slot>
       </div>

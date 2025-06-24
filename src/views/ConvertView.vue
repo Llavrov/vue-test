@@ -5,6 +5,3 @@
 <template>
   <ConverterForm />
 </template>
-
-<style scoped>
-</style>

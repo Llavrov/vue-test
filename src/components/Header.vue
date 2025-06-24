@@ -1,5 +1,11 @@
 <script setup lang="ts">
   import IconCommunity from './icons/IconCommunity.vue'
+  import { useCurrencyStore } from '@/stores/currency'
+  import Dropdown from './Dropdown.vue'
+  import { ref } from 'vue'
+
+  const currencyStore = useCurrencyStore()
+  const isDropdownOpen = ref(false)
 </script>
 
 <template>
@@ -11,7 +17,13 @@
       <RouterLink to="/convert" class="nav-link" active-class="active">Конвертер</RouterLink>
     </nav>
 
-    <!-- Здесь будет дропдаун -->
+    <Dropdown
+        :options="currencyStore.supportedCurrencies"
+        v-model:isOpen="isDropdownOpen"
+        v-model:selectedOption="currencyStore.baseCurrency"
+        :title="currencyStore.baseCurrency"
+        @update:selectedOption="currencyStore.setBaseCurrency"
+    />
   </header>
 </template>
 

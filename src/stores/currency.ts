@@ -27,17 +27,19 @@ export const useCurrencyStore = defineStore('currency', () => {
       
       const rates = currencyData.value.rates
       
-      if (toCurrency === currencyData.value.base) {
-        return rates[fromCurrency] || BASE_RATE_VALUE
+      if (fromCurrency === toCurrency) return BASE_RATE_VALUE
+      
+      const directPair = `${fromCurrency.toLowerCase()}-${toCurrency.toLowerCase()}`
+      if (rates[directPair]) {
+        return Number(rates[directPair])
       }
       
-      if (fromCurrency === currencyData.value.base) {
-        return 1 / (rates[toCurrency] || BASE_RATE_VALUE)
+      const reversePair = `${toCurrency.toLowerCase()}-${fromCurrency.toLowerCase()}`
+      if (rates[reversePair]) {
+        return 1 / Number(rates[reversePair])
       }
       
-      const fromRate = rates[fromCurrency] || BASE_RATE_VALUE
-      const toRate = rates[toCurrency] || BASE_RATE_VALUE
-      return fromRate / toRate
+      return BASE_RATE_VALUE
     }
   })
 
@@ -46,11 +48,16 @@ export const useCurrencyStore = defineStore('currency', () => {
     error.value = null
     
     try {
-      const data = await fetch(RATE_ENDPOINT).then(res => res.json())
+      const response = await fetch(RATE_ENDPOINT)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
+      const data = await response.json()
 
       currencyData.value = {
-        base: data.base || 'USD',
-        rates: data.rates || {},
+        base: Currency.USD,
+        rates: data,
         timestamp: Date.now()
       }
     } catch (err) {

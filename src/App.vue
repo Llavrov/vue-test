@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import { onMounted } from 'vue'
 import Header from './components/Header.vue'
+import { useCurrencyStore } from '@/stores/currency'
+
+const currencyStore = useCurrencyStore()
+
+onMounted(async () => {
+  await currencyStore.fetchCurrencyRates()
+})
 </script>
 
 <template>
   <Header />
 
-  <main id="app">
+  <main>
     <RouterView />
   </main>
 </template>
@@ -26,6 +34,7 @@ body {
 }
 
 #app {
+  width: 800px;
   min-height: 100vh;
   display: flex;
   gap: 100px;
